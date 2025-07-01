@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Tracker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+<body>
+
+    <video autoplay muted loop id="bgVideo">
+        <source src="/static/videos/backgroundvideo.mp4" type="video/mp4">
+      </video>
+    <h1>Expense Tracker</h1>
+    <form action="/add" method="POST">
+        <input type="number" name="amount" placeholder="Amount" required>
+        <input type="text" name="category" placeholder="Category" required>
+        <input type="text" name="description" placeholder="Description" required>
+        <input type="date" name="date" required>
+        <button type="submit">Add Expense</button>
+    </form>
+
+    <table>
+        <tr>
+            <th>Amount</th>
+            <th>Category</th>
+            <th>Description</th>
+            <th>Date</th>
+            <th>Action</th>
+        </tr>
+        {% for expense in expenses %}
+        <tr>
+            <td>{{ expense[1] }}</td>
+            <td>{{ expense[2] }}</td>
+            <td>{{ expense[3] }}</td>
+            <td>{{ expense[4] }}</td>
+            <td><a href="{{ url_for('delete_expense', id=expense[0]) }}">Delete</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+    <div class="expense-container">
+        <h2 class="highlight">Total Expense: Rs {{ total_expense }}</h2>
+        <h2 class="highlight">Remaining Savings: Rs {{ savings }}</h2>
+    </div>
+</body>
+</html>
